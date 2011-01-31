@@ -6,7 +6,8 @@ import java.io.Writer;
 import java.sql.Connection;
 
 /**
- * More interesting information could be recorded here..
+ * TODO: More interesting information could be recorded here.. 
+ * As such this class currently really isn't used.
  * 
  * @author jennifer_andre
  *
