@@ -68,7 +68,7 @@ public class SettingsImpl implements Settings {
 	 */
 	@Override
 	public void setMaximumConnections(int maximumConnections) {
-		if (this.maximumConnections > 0)
+		if (maximumConnections > 0)
 			this.maximumConnections = maximumConnections;
 		else
 			this.maximumConnections = UNLIMITED_CONNECTIONS;
