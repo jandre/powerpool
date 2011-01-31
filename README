@@ -1,14 +1,29 @@
+Hello, this is a sample database connection pooling class I created for an interview.  
+Naturally, in writing it, I sort of got carried away. :(
 
+Perhaps it will be a useful example to someone else.
 
-todo:  idle.
+Latest version is at @ https://github.com/jandre/powerpool.  
 
-idleMaximumSeconds:
+ to build powerpool.jar:
+ 	- ant dist
+ 
+ to run tests (some tests use hsqldb):
+ 	- ant test
+
+Configuration options are controlled by the "Settings" class.  Basically, there's two things you can configure:
+
+ 1) MaximumIdleTimeSeconds:  the maximum time a free connection can idle before it is closed so the resources can be reclaimed. 
+ 
  	- the maximum time a free connection can idle before it is closed.  
- 	- note: if "minimumIdleConnections" is set, the idleMaximumSeconds does not apply to those connections.
- 	- default = 60 * 5 (5 minutes).   -1 = let all threads idle forever (not recommended).
-
-minimumIdleConnections:
-	- the minimum number of idle connections to maintain at all times.
-	- default = 0
+  	- default = 60 * 5 seconds (5 minutes).   -1 = let all threads idle forever (not recommended unless you set a max limit.
+  	
+ 2) MaximumConnections: maximum number of connections that can be assigned.  The pool will not block if the queue is full, it will throw an exception.
+ 	- default = unlimited connections.
+ 	- if you set this to <= 0, it resets it to unlimited.
+ 	
+ 
+ 
+ 
  
  
