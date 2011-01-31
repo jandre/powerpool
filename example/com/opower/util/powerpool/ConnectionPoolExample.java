@@ -44,7 +44,7 @@ public class ConnectionPoolExample {
 		 		SimpleConnectionPool.createDefaultPool("org.hsqldb.jdbc.JDBCDriver",
 				"jdbc:hsqldb:mem:power-test", "sa", "");
 		
-		Connection connection = pool.getConnection();
+		Connection connection = pool.getConnection(); 
 		
 		// do some stuff with the connection...
 		doSomethingWithDatabase(connection);
