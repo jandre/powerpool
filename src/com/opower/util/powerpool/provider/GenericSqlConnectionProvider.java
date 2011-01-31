@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 /**
  * 
- * TODO: it uses  a driver manager to get a connection.  
+ *  Uses java.sql.DriverManager to create a connection.
  * 
  * @author jennifer_andre
  *
