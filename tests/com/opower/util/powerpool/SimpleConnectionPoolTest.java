@@ -84,6 +84,26 @@ public class SimpleConnectionPoolTest {
 		context.assertIsSatisfied();
 	}
  
+	@Test
+	public void testExceptionIsThrownWhenNoConnectionCanBeCreated() throws SQLException {
+final SimpleConnectionPool pool = new SimpleConnectionPool( dummyManager, dummyWrapper, Monitor.DUMMY_MONITOR);
+		
+		context.checking(new Expectations() {{ 
+			oneOf(dummyManager).requestConnection(); will(throwException(new SQLException("Failed to create a connection")));
+		 	
+			 
+		}});
+		String message ="";
+		try {
+		Connection pooledConnection = pool.getConnection(); 
+		} catch (SQLException e) {
+			// a bit redundant..
+			message = e.getMessage();
+			
+		}
+		Assert.assertEquals("Failed to create a connection",message);
+		
+	}
 	  
 	@Test
 	public void testReturningAConnectionCallsManagerToFreeConnection() throws SQLException {

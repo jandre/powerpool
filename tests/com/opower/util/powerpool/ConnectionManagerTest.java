@@ -38,10 +38,32 @@ public class ConnectionManagerTest {
 	}
   
 	@Test
+	public final void testRequestConnectionThrowsExceptionIfNoneCanBeMade() throws SQLException {
+		ConnectionManagerImpl manager = new ConnectionManagerImpl(dummySettings);
+ 		context.checking(new Expectations() {{ 
+ 			oneOf(dummySettings).getNewConnectionProvider(); will(returnValue(dummyConnectionProvider));  
+			oneOf(dummyConnectionProvider).newConnection(); will(throwException(new SQLException("Failed to create a connection")));
+			atLeast(1).of(dummySettings).getMaximumConnections(); will(returnValue(1)); 
+		}});	 
+ 		String message ="";
+		try {
+	 		Connection connection = manager.requestConnection();
+		} catch (SQLException e) {
+			// a bit redundant..
+			message = e.getMessage();
+			
+		}
+		Assert.assertEquals("Failed to create a connection",message);
+
+ 		assertEquals(0, manager.usedConnections.size());
+ 		assertEquals(0, manager.idleConnections.size());
+ 		
+	}
+	@Test
 	public final void testRequestConnectionWhenEmptyAddsOneConnectionToQueue() throws SQLException {
 		ConnectionManagerImpl manager = new ConnectionManagerImpl(dummySettings);
  		context.checking(new Expectations() {{ 
- 			atLeast(1).of(dummySettings).getNewConnectionProvider(); will(returnValue(dummyConnectionProvider)); 
+ 			oneOf(dummySettings).getNewConnectionProvider(); will(returnValue(dummyConnectionProvider)); 
 			oneOf(dummyConnectionProvider).newConnection(); will(returnValue(dummyConnection));
 			atLeast(1).of(dummySettings).getMaximumConnections(); will(returnValue(1)); 
 		}});	
