@@ -1,10 +1,31 @@
 package com.opower.util.powerpool;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.junit.Assert;
 
 public class ConnectionPoolExample {
 
+	
+	public static void doSomethingWithDatabase(Connection connection) throws SQLException {
+		Statement stmt = connection.createStatement();
+        
+        stmt.addBatch( "CREATE MEMORY TABLE world (hello VARCHAR(100))");
+        stmt.addBatch("INSERT INTO world (hello) VALUES ('hello world')");
+        
+        stmt.executeBatch();
+        
+        ResultSet set = stmt.executeQuery("SELECT hello FROM world");
+ 
+        while (set.next()) {
+        	System.out.println(set.getString("hello")); 
+        }
+         
+        
+	}
 	/**
 	 * @param args
 	 * @throws SQLException 
@@ -18,6 +39,7 @@ public class ConnectionPoolExample {
 		Connection connection = pool.getConnection();
 		
 		// do some stuff with the connection...
+		doSomethingWithDatabase(connection);
 		
 		pool.releaseConnection(connection);	// or, you can call connection.close();
 		
