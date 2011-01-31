@@ -14,7 +14,7 @@ Latest version is at @ https://github.com/jandre/powerpool.
  to create a connection pool:
  
  		SimpleConnectionPool pool = SimpleConnectionPool.createDefaultPool("org.hsqldb.jdbc.JDBCDriver",
-				"jdbc:hsqldb:mem:power-test", "sa", "");
+				"jdbc:hsqldb:mem:power-test", "sa", "password");
 		
 		Connection connection = pool.getConnection();
 		
