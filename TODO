@@ -1,0 +1,6 @@
+
+TODO:
+- organize tests better
+- add thorough/better tests for ProxiedConnection related stuff.
+- add code in the monitor that periodically logs/prints stats about used/free pool connections 
+- eh, logging would probably be nice 
