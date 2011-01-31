@@ -13,7 +13,7 @@ public class ConnectionPoolExample {
 	public static void doSomethingWithDatabase(Connection connection) throws SQLException {
 		Statement stmt = connection.createStatement();
         
-        stmt.addBatch( "CREATE MEMORY TABLE world (hello VARCHAR(100))");
+        stmt.addBatch("CREATE TABLE world (hello VARCHAR(100))");
         stmt.addBatch("INSERT INTO world (hello) VALUES ('hello world')");
         
         stmt.executeBatch();
@@ -23,6 +23,9 @@ public class ConnectionPoolExample {
         while (set.next()) {
         	System.out.println(set.getString("hello")); 
         }
+        
+
+        stmt.execute("DROP TABLE world");
          
         
 	}
@@ -33,7 +36,12 @@ public class ConnectionPoolExample {
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 	 
-		SimpleConnectionPool pool = SimpleConnectionPool.createDefaultPool("org.hsqldb.jdbc.JDBCDriver",
+		SimpleConnectionPool pool = (args != null && args.length >= 4) ?
+
+		 		SimpleConnectionPool.createDefaultPool(args[0],args[1], args[2], args[3])
+		 	:
+		 		
+		 		SimpleConnectionPool.createDefaultPool("org.hsqldb.jdbc.JDBCDriver",
 				"jdbc:hsqldb:mem:power-test", "sa", "");
 		
 		Connection connection = pool.getConnection();
