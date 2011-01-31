@@ -12,7 +12,9 @@ import com.opower.util.powerpool.ConnectionPool;
  * 
  * This is an attempt to cleverly replace the "manually" constructed proxy in
  * ManualProxiedConnection.   It uses reflection to inject an InvocationHandler,
- * I dunno how robust or performant this would be IRL.   
+ * I dunno how robust or performant this would be IRL.  
+ * 
+ * 
  * 
  * @author jennifer_andre
  *
@@ -36,9 +38,7 @@ public class AutoProxiedConnection implements java.lang.reflect.InvocationHandle
 	
 	@SuppressWarnings("rawtypes")
 	private static Class[] getProxyInterfaces(Connection connection) {
-		@SuppressWarnings("rawtypes")
-		//Class[] interfaces = (Class[])Arrays.copyOf(connection.getClass().getInterfaces(), connection.getClass().getInterfaces().length);
-			  	//interfaces[interfaces.length - 1] = ProxiedConnection.class;
+		@SuppressWarnings("rawtypes") 
 		Class[] interfaces = new Class[] { Connection.class,  ProxiedConnection.class };
 
 	  	 return interfaces;
@@ -121,7 +121,7 @@ public class AutoProxiedConnection implements java.lang.reflect.InvocationHandle
 			throw new SQLException("You are attempting a connection operation on an invalid connection.  This SQL connection has already been returned to the connection pool.");
 		}
 		
-		// the java.lang.reflect.proxy stuff auto-proxies equals(), hashCode(), and toString() :(
+		// the java.lang.reflect.proxy stuff auto-proxies calls to equals(), hashCode(), and toString() :(
 		// if i don't implement "equals" then jmock really breaks quite hard.
 		// TODO: hashCode() and toString() should be implemented if i were going to use this in "production".
 		if (methodName.equals("equals"))
