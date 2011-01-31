@@ -11,6 +11,22 @@ Latest version is at @ https://github.com/jandre/powerpool.
  to run tests (some tests use hsqldb):
  	- ant test
 
+ to create a connection pool:
+ 
+ 		SimpleConnectionPool pool = SimpleConnectionPool.createDefaultPool("org.hsqldb.jdbc.JDBCDriver",
+				"jdbc:hsqldb:mem:power-test", "sa", "");
+		
+		Connection connection = pool.getConnection();
+		
+		// TODO: do some stuff with the connection...
+		
+		pool.releaseConnection(connection);	// or, you can call connection.close();
+		
+		pool.stop();  // release any idle resources;.
+		
+	
+ 
+
 Configuration options are controlled by the "Settings" class.  Basically, there's two things you can configure:
 
  1) MaximumIdleTimeSeconds:  the maximum time a free connection can idle before it is closed so the resources can be reclaimed. 
