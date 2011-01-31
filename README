@@ -1,0 +1,14 @@
+
+
+todo:  idle.
+
+idleMaximumSeconds:
+ 	- the maximum time a free connection can idle before it is closed.  
+ 	- note: if "minimumIdleConnections" is set, the idleMaximumSeconds does not apply to those connections.
+ 	- default = 60 * 5 (5 minutes).   -1 = let all threads idle forever (not recommended).
+
+minimumIdleConnections:
+	- the minimum number of idle connections to maintain at all times.
+	- default = 0
+ 
+ 

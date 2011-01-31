@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="powerpool" default="dist" basedir=".">
+    <description>
+     	simple ant buildfile for powerpool.
+    </description> 
+    
+  <!--  properties. -->
+  <property name="src" location="src"/>
+  <property name="src-test" location="tests"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="build-test"  location="build-test"/>
+  <path id="test-dependencies">
+        <fileset dir="test-dependencies" includes="**/*.jar"/>
+  </path>
+    <path id="dependencies">
+        <fileset dir="dependencies" includes="**/*.jar"/>
+  </path>
+  <path id="test-classpath">
+  <pathelement location="${build}" /> 
+  <pathelement location="${build-test}" />
+   <fileset dir="test-dependencies">
+    <include name="**/*.jar"/>
+  </fileset>
+  <fileset dir="dependencies">
+    <include name="**/*.jar"/>
+  </fileset>
+</path>
+    
+    
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build-test}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}" classpathref="dependencies" />
+     
+    <!--  builds tests -->
+    <javac srcdir="${src-test}" destdir="${build-test}"  classpath="${build}" classpathref="test-dependencies"> 
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/> 
+     
+    <jar jarfile="${dist}/powerpool.jar" basedir="${build}"/>
+	
+	<!-- copy the necessary lib files -->
+	<copy todir="${dist}">
+    <fileset dir="dependencies">
+		<include name="**/*.jar"/>
+	</fileset>
+  </copy>
+	
+	
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${build-test}"/>
+    <delete dir="${dist}"/>
+  </target>
+ 
+  <target name="test" depends="compile">
+	  <junit fork="yes" haltonfailure="yes">
+	     <batchtest fork="yes">
+	    <fileset dir="${src-test}">
+	       <include name="**/*Test.java" />
+	       <include name="**/Test*.java" />
+	    </fileset>
+	  </batchtest>
+	    <formatter type="plain" usefile="false" />
+	    <classpath refid="test-classpath"/>
+	    
+	  </junit>
+	</target>
+</project>
