@@ -61,7 +61,7 @@ public class ConnectionManagerTest {
 
 				@Override
 				public boolean isConnectionValid(Connection c) {
-					// TODO Auto-generated method stub
+					
 					return true;
 				} })); 
 		
@@ -128,7 +128,7 @@ public class ConnectionManagerTest {
 
 				@Override
 				public boolean isConnectionValid(Connection c) {
-					// TODO Auto-generated method stub
+					
 					return true;
 				} })); 
 		}});	
@@ -155,7 +155,7 @@ public class ConnectionManagerTest {
 
 				@Override
 				public boolean isConnectionValid(Connection c) {
-					// TODO Auto-generated method stub
+					
 					return false;
 				} })); 
 		}});	
@@ -181,7 +181,7 @@ public class ConnectionManagerTest {
 
 				@Override
 				public boolean isConnectionValid(Connection c) {
-					// TODO Auto-generated method stub
+				 
 					return true;
 				} })); 
 		}});	
@@ -215,7 +215,7 @@ public class ConnectionManagerTest {
 
 				@Override
 				public boolean isConnectionValid(Connection c) {
-					// TODO Auto-generated method stub
+					
 					return true;
 				} })); 
 		}});	
@@ -257,8 +257,7 @@ public class ConnectionManagerTest {
 
 				@Override
 				public boolean isConnectionValid(Connection c) {
-					// TODO Auto-generated method stub
-					return true;
+					 	return true;
 				} })); 
 		 
 			
@@ -311,7 +310,7 @@ public class ConnectionManagerTest {
 
 				@Override
 				public boolean isConnectionValid(Connection c) {
-					// TODO Auto-generated method stub
+					
 					return true;
 				} })); 
 		}});	

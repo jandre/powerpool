@@ -72,8 +72,7 @@ public class ThreadedConnectionTest {
 						try {
 							Connection con = pool.getConnection();
 						  
-							HsqlDatabaseUtil.selectARow(con); 
-							// TODO Auto-generated method stub
+							HsqlDatabaseUtil.selectARow(con);  
 							add(connections, con); 
 						 
 						} catch (Exception e) {}
