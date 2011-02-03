@@ -45,6 +45,7 @@ public class SimpleConnectionPoolTest {
 		context.assertIsSatisfied();
 	}
  	  
+	
 	@Test
 	public void testCreateNewConnectionReturnsAConnection() throws SQLException {
 		final SimpleConnectionPool pool = new SimpleConnectionPool( dummyManager, dummyWrapper, Monitor.DUMMY_MONITOR);
@@ -189,8 +190,35 @@ final SimpleConnectionPool pool = new SimpleConnectionPool( dummyManager, dummyW
 	}
 
 	
+	@Test
+	public void testMonitorGetsStarted() {
+		final Monitor dummyMonitor = context.mock(Monitor.class);
 	
+		context.checking(new Expectations() {{ 
+			oneOf(dummyMonitor).start();
+		}});	
+		SimpleConnectionPool pool = new SimpleConnectionPool( dummyManager , dummyWrapper, dummyMonitor );
+		
+		context.assertIsSatisfied();
+	}
 
+	@Test
+	public void testMonitorGetsStopped() {
+		final Monitor dummyMonitor = context.mock(Monitor.class);
 	
+		context.checking(new Expectations() {{ 
+			oneOf(dummyMonitor).start();
+		}});	
+		SimpleConnectionPool pool = new SimpleConnectionPool( dummyManager , dummyWrapper, dummyMonitor );
+		
+		context.assertIsSatisfied();
+		context.checking(new Expectations() {{ 
+			oneOf(dummyMonitor).stop();
+			oneOf(dummyManager).close();
+		}});	 
+		pool.stop();
+	}
+
+
 
 }
