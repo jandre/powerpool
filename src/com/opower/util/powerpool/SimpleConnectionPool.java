@@ -52,6 +52,7 @@ public class SimpleConnectionPool implements ConnectionPool {
 	 	this.manager = manager; 
 		this.connectionWrapper = connectionWrapper;
 		this.monitor = monitor;
+		this.monitor.start();
 	}
 	
 	void stop() {
